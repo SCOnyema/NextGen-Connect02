@@ -15,6 +15,7 @@ const Dashboard = () => {
     const [loading, setLoading] = useState(true); // Add a loading state
     const [registeredEvents, setRegisteredEvents] = useState([]);
     const [attendees, setAttendees] = useState([]);
+    const [userName, setUserName] = useState('');
 
     // Fetch attendees for each event
     const fetchAttendees = async () => {
@@ -47,6 +48,10 @@ const Dashboard = () => {
                     if (docSnap.exists()) {
                         console.log("User role:", docSnap.data().role);
                         setUserRole(docSnap.data().role);
+
+                        // display users name
+                        const userData = docSnap.data();
+                        setUserName(userData.name || "User");
 
                         // Fetch events for both organizers and students
                         const eventsCollection = collection(db, 'events');
@@ -141,10 +146,11 @@ const Dashboard = () => {
 
     // Update an existing event (for organizers)
     const handleUpdateEvent = async (eventId, updatedData) => {
+        const eventRef = doc(db, 'events', eventId);
         try {
             const eventRef = doc(db, 'events', eventId);
             await updateDoc(eventRef, updatedData);
-            console.log('Event updated:', eventId);
+            console.log('Event updated:', eventId, updatedData);
 
             // Update local state
             setEvents((prevEvents) =>
@@ -210,24 +216,33 @@ const Dashboard = () => {
 
     if (userRole.toLowerCase() === "student") {
         return (
-            <div className="p-4">
-                <p className="text-gray-700">Welcome to your student dashboard.</p>
-                <div className="flex flex-col gap-8">
-                    <div className="w-full">
-                        <ErrorBoundary>
-                        <EventGridSwipe events={events} onRegister={handleRegisterForEvent} />
-                        </ErrorBoundary>
-                    </div>
-                    <div className="w-full">
-                        <RegisteredEventsList events={registeredEvents} onUnregister={handleUnregisterEvent} />
+            <div className="mx-2 sm:mx-4 md:mx-6 lg:mx-8">
+                <p className="text-xs sm:text-sm md:text-base lg:text-lg leading-tight sm:leading-snug md:leading-normal">
+                    Hello <span className="font-bold">{userName}</span>! Welcome to your dashboard
+                </p>
+                <p className="text-xs sm:text-sm md:text-base lg:text-lg leading-tight sm:leading-snug md:leading-normal mt-8" > Start Exploring Opportunities </p>
+                <div className="mt-6">
+                    <div className="flex flex-col gap-8">
+                        <div className="w-full">
+                            <ErrorBoundary>
+                                <EventGridSwipe events={events} onRegister={handleRegisterForEvent}/>
+                            </ErrorBoundary>
+                        </div>
+                        <div className="w-full">
+                            <RegisteredEventsList events={registeredEvents} onUnregister={handleUnregisterEvent}/>
+                        </div>
                     </div>
                 </div>
             </div>
         );
     } else if (userRole.toLowerCase() === "organizer") {
         return (
-            <div className="p-4">
-                <p className="text-gray-700">Welcome to your organizer dashboard.</p>
+            <div className="mx-2 sm:mx-4 md:mx-6 lg:mx-8">
+                <p className="text-xs sm:text-sm md:text-base lg:text-lg leading-tight sm:leading-snug md:leading-normal">
+                    Hello <span className="font-bold">{userName}</span>! Welcome to your dashboard
+                </p>
+                <p className="text-xs sm:text-sm md:text-base lg:text-lg leading-tight sm:leading-snug md:leading-normal mt-8"> Start
+                    Creating Opportunities </p>
                 <div className="mt-8">
                     <h2 className="text-xl font-bold">Create Event</h2>
                     <CreateEventForm onCreateEvent={handleCreateEvent}/>
@@ -241,7 +256,7 @@ const Dashboard = () => {
                     />
                 </div>
                 <div className="mt-8">
-                    <h2 className="text-xl font-bold">Manage Attendees</h2>
+                    <h2 className="text-xl font-bold">Manage All Attendees</h2>
                     {Object.entries(attendees).map(([eventId, attendeesList]) => (
                         <ManageAttendeesList
                             key={eventId}

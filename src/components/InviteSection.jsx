@@ -1,4 +1,17 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 function InviteSection() {
+    const navigate = useNavigate();
+
+    const handleHostNowClick = () => {
+        navigate('/login');
+    };
+
+    const handleJoinNowClick = () => {
+        navigate('/login');
+    };
+
     return(
         <section className="py-16 bg-gray-100">
             <div className="container mx-auto px-6">
@@ -11,6 +24,7 @@ function InviteSection() {
                             Engage with a diverse talent pool or hire the best minds.
                         </p>
                         <button
+                            onClick={handleHostNowClick}
                             className="mt-6 flex items-center justify-center bg-blue-800 text-white px-6 py-3 rounded-full hover:bg-blue-900">
                             Host Now
                             <span className="ml-2">↗️</span> {/* Arrow icon */}
@@ -28,6 +42,7 @@ function InviteSection() {
                             and connect with professionals.
                         </p>
                         <button
+                            onClick={handleJoinNowClick}
                             className="mt-6 flex items-center justify-center bg-blue-800 text-white px-6 py-3 rounded-full hover:bg-blue-900">
                             Join Now
                             <span className="ml-2">↗️</span> {/* Arrow icon */}

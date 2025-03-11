@@ -12,7 +12,8 @@ const EventCard = ({ event, onRegister }) => {
                 <p className="text-gray-600 mt-2">{event.description || "No description available"}</p>
                 <div className="mt-4">
                     <span className="text-sm text-gray-500">{event.date}</span>
-                    <span className="text-sm text-gray-500 ml-2">{event.location}</span>
+                    <span className="text-sm text-gray-500 ml-2">• {event.location}</span>
+                    <span className="text-sm text-gray-500 ml-2">• {event.category}</span>
                 </div>
                 <button
                     className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-full w-full hover:bg-blue-700"

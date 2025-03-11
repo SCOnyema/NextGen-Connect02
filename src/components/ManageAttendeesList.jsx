@@ -3,7 +3,7 @@ import React from 'react';
 const ManageAttendeesList = ({ eventId, attendees, onRemoveAttendee }) => {
     return (
         <div className="p-4">
-            <h2 className="text-xl font-bold mb-4">Manage Attendees</h2>
+            <h2 className="text-xl font-bold mb-4">Manage Event Attendees</h2>
             <div className="space-y-2">
                 {attendees.map((attendee, index) => (
                     <div key={index} className="bg-white rounded-lg shadow-sm p-3 flex justify-between items-center">

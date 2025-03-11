@@ -9,7 +9,8 @@ const RegisteredEventsList = ({ events, onUnregister }) => {
                         <p className="text-gray-600">{event.description}</p>
                         <div className="mt-4">
                             <span className="text-sm text-gray-500">{event.date}</span>
-                            <span className="text-sm text-gray-500 ml-2">{event.location}</span>
+                            <span className="text-sm text-gray-500 ml-2">• {event.location}</span>
+                            <span className="text-sm text-gray-500 ml-2">• {event.category}</span>
                         </div>
                         <button
                             onClick={() => onUnregister(event.id)}

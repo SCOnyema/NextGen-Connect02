@@ -6,12 +6,13 @@ const CreateEventForm = ({ onCreateEvent }) => {
         description: '',
         date: '',
         location: '',
+        category: '',
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
         onCreateEvent(formData); // Pass the event data to the parent component
-        setFormData({ title: '', description: '', date: '', location: '' }); // Reset form
+        setFormData({ title: '', description: '', date: '', location: '', category: '' }); // Reset form
     };
 
     return (
@@ -46,6 +47,18 @@ const CreateEventForm = ({ onCreateEvent }) => {
                 className="w-full p-2 border rounded"
                 required
             />
+            <select
+                value={formData.category}
+                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                className="w-full p-2 border rounded"
+                required
+            >
+                <option value="">Select Category</option>
+                <option value="Workshop">Workshop</option>
+                <option value="Competition">Competition</option>
+                <option value="Mentorship">Mentorship</option>
+                <option value="Internship">Internship</option>
+            </select>
             <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded-full w-full">
                 Create Event
             </button>

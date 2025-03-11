@@ -11,6 +11,8 @@ import Compete from './pages/Compete';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import DashboardLayout from './components/DashboardLayout';
+import CalendarPage from './pages/CalendarPage';
+import UserProfile from './pages/UserProfile';
 import './App.css';
 import './index.css';
 
@@ -50,6 +52,9 @@ function App() {
             {/* Dashboard Routes */}
             <Route path="/dashboard/*" element={<DashboardLayout />}>
                 <Route index element={<Dashboard />} />
+                <Route path="calendar" element={<CalendarPage />} />
+                <Route path="profile" element={<UserProfile />} />
+
 
             </Route>
         </Routes>

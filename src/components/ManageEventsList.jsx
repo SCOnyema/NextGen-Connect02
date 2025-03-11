@@ -12,19 +12,19 @@ const ManageEventsList = ({ events, onUpdateEvent, onDeleteEvent }) => {
             description: event.description,
             date: event.date,
             location: event.location,
-            image: event.image,
         });
     };
 
     // Handle form input changes
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
     };
 
     // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log('Submitting updated data for event', editingEvent.id, formData);
         onUpdateEvent(editingEvent.id, formData); // Pass updated data to the parent component
         setEditingEvent(null); // Close the edit form
     };
@@ -38,6 +38,7 @@ const ManageEventsList = ({ events, onUpdateEvent, onDeleteEvent }) => {
                     <div className="mt-4">
                         <span className="text-sm text-gray-500">{event.date}</span>
                         <span className="text-sm text-gray-500 ml-2">{event.location}</span>
+                        <span className="text-sm text-gray-500 ml-2">• {event.category}</span>
                     </div>
                     <div className="mt-4">
                         <button
@@ -64,7 +65,7 @@ const ManageEventsList = ({ events, onUpdateEvent, onDeleteEvent }) => {
                                         type="text"
                                         name="title"
                                         placeholder="Event Title"
-                                        value={formData.title}
+                                        value={formData.title || ''}
                                         onChange={handleInputChange}
                                         className="w-full p-2 border rounded"
                                         required
@@ -72,7 +73,7 @@ const ManageEventsList = ({ events, onUpdateEvent, onDeleteEvent }) => {
                                     <textarea
                                         name="description"
                                         placeholder="Event Description"
-                                        value={formData.description}
+                                        value={formData.description || ''}
                                         onChange={handleInputChange}
                                         className="w-full p-2 border rounded"
                                         required
@@ -80,7 +81,7 @@ const ManageEventsList = ({ events, onUpdateEvent, onDeleteEvent }) => {
                                     <input
                                         type="date"
                                         name="date"
-                                        value={formData.date}
+                                        value={formData.date || ''}
                                         onChange={handleInputChange}
                                         className="w-full p-2 border rounded"
                                         required
@@ -89,7 +90,7 @@ const ManageEventsList = ({ events, onUpdateEvent, onDeleteEvent }) => {
                                         type="text"
                                         name="location"
                                         placeholder="Location"
-                                        value={formData.location}
+                                        value={formData.location || ''}
                                         onChange={handleInputChange}
                                         className="w-full p-2 border rounded"
                                         required
