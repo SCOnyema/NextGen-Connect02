@@ -4,7 +4,7 @@ import { IoHomeOutline, IoCalendarOutline, IoPersonOutline, IoLogOutOutline } fr
 
 const Sidebar = ({ onLogout }) => {
     return (
-        <div className="bg-white text-[#333333] h-screen px-4 fixed w-16 md:w-64 border-r border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white">
+        <div className="bg-white text-[#333333] h-screen px-4 fixed w-16 md:w-64 border-r border-gray-300">
             <h1 className='text-2xl font-bold hidden md:block mt-4 text-center italic text-blue-900'>NextGen Connect</h1>
             <ul className='flex flex-col mt-5 text-xl'>
                 {/* Dashboard */}
