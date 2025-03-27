@@ -85,6 +85,6 @@ code {
     }
 
     .react-big-calendar {
-        ,: 12px; /* Slightly smaller calendar font for mobile */
+        font-size: 12px; /* Slightly smaller calendar font for mobile */
     }
 }
