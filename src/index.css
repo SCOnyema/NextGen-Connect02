@@ -88,3 +88,23 @@ code {
         font-size: 12px; /* Slightly smaller calendar font for mobile */
     }
 }
+
+.swiper {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+
+@media (max-width: 639px) {
+    .swiper-slide {
+        width: 100% !important;
+        box-sizing: border-box;
+    }
+}
+
+.swiper-slide {
+    height: auto !important;
+}
+
+
