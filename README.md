@@ -152,10 +152,10 @@ I would like to express my gratitude to my project supervisor for his consistent
 
 Additional thanks to:
 
-Firebase Documentation [Firebase](https://firebase.google.com/docs) for the backend integration and setup help 
-TailwindCSS Documentation [TailwindCSS](https://tailwindcss.com/docs/installation/using-vite) for making styling fast and flexible for me
-Helpful Dashboard structure reference (https://www.youtube.com/watch?v=n_fUlVNAyrE) for making me set up a dashboard structure 
-Helpful React references i would across multiple stalkoverflow website 
+* Firebase Documentation [Firebase](https://firebase.google.com/docs) for the backend integration and setup help 
+* TailwindCSS Documentation [TailwindCSS](https://tailwindcss.com/docs/installation/using-vite) for making styling fast and flexible for me
+* Helpful Dashboard structure reference (https://www.youtube.com/watch?v=n_fUlVNAyrE) for inspiring my dashboard structure
+* Helpful React references I came across include multiple Stack Overflow websites 
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
