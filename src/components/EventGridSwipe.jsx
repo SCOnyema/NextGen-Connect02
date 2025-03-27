@@ -23,18 +23,23 @@ const EventGridSwipe = ({ events, onRegister }) => {
                         slidesPerView: 3,
                     },
                 }}
+
+
             >
                 {events.map((event) => {
-                    console.log("Rendering event:", event); // Debugging: Check each event object
+                    console.log("Rendering event:", event); // debugging: Check each event object
                     return (
-                        <SwiperSlide key={event.id} className="!w-72">
+                        <SwiperSlide key={event.id} className="!w-auto">
                             <EventCard event={event} onRegister={onRegister} />
                         </SwiperSlide>
                     );
                 })}
             </Swiper>
+
         </div>
     );
 };
+
+
 
 export default EventGridSwipe;

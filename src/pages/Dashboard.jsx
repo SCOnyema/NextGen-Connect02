@@ -7,6 +7,7 @@ import RegisteredEventsList from "../components/RegisteredEventsList";
 import CreateEventForm from "../components/CreateEventForm";
 import ManageEventsList from "../components/ManageEventsList";
 import ManageAttendeesList from "../components/ManageAttendeesList.jsx";
+import EventSearch from "../components/EventSearch";
 import ErrorBoundary from "../components/ErrorBoundary.jsx";
 
 const Dashboard = () => {
@@ -16,23 +17,57 @@ const Dashboard = () => {
     const [registeredEvents, setRegisteredEvents] = useState([]);
     const [attendees, setAttendees] = useState([]);
     const [userName, setUserName] = useState('');
+    const [filteredEvents, setFilteredEvents] = useState([]);
+
+    //separate states for search and filter
+    const [searchTerm, setSearchTerm] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('');
 
     // Fetch attendees for each event
-    const fetchAttendees = async () => {
+    const fetchAttendees = async (user) => {
         try {
+            // Verify the uid of the logged-in user
+            if (!user || !user.uid) {
+                 new Error("Invalid user object or user UID not found!");
+            }
+            console.log("Logged-in User UID:", user.uid);
+
             const eventsCollection = collection(db, 'events');
             const querySnapshot = await getDocs(eventsCollection);
             const attendeesData = {};
 
-            // fetch all events
+            //Function to fetch a single user's details by their UID
+            const fetchUserName = async (uid) => {
+                const userRef = doc(db, 'Users', uid);
+                const userSnap = await getDoc(userRef);
+                return userSnap.exists() ? userSnap.data().name || 'Unknown User' : `User (${uid.slice(0, 6)}...)`;
+            };
 
-            querySnapshot.docs.forEach((doc) => {
+            // Iterate over fetched documents
+            for (const doc of querySnapshot.docs) {
                 const eventId = doc.id;
                 const eventData = doc.data();
-                attendeesData[eventId] = eventData.registeredStudents || []; // Fetch registered attendees
-            });
 
-            setAttendees(attendeesData); // Update attendees state
+                console.log("Event Data:", eventData); // Debug event data
+
+                // Filter events by organizerId
+                if (eventData.organizerId === user.uid) {
+                    // Fetch names for each registered student (UID)
+                    const registeredStudents = eventData.registeredStudents || [];
+                    const attendeesList = await Promise.all(
+                        registeredStudents.map(async (uid) => {
+                            return await fetchUserName(uid); // Fetch name for each UID
+                        })
+                    );
+
+                    attendeesData[eventId] = attendeesList; // Add attendee names to attendeesData
+                }
+            }
+
+            console.log("Filtered Attendees Data with Names:", attendeesData); // Debug the final result
+
+            // Update attendees state
+            setAttendees(attendeesData);
         } catch (error) {
             console.error("Error fetching attendees:", error);
         }
@@ -64,8 +99,23 @@ const Dashboard = () => {
                         //set all events
                         setEvents(eventsData);
 
+                        // initially no filter
+                        setFilteredEvents(eventsData);
+
                         // fetch attendees for each event
-                        await fetchAttendees();
+                        await fetchAttendees(user);
+
+                        // fetch created events by Organizer
+                        if (docSnap.data().role.toLowerCase() === "organizer") {
+                            // Fetch created events for the organizer
+                            const createdEvents = eventsData.filter(event =>
+                                event.organizerId === user.uid // Filter by organizer ID
+                            );
+
+                            // Update state directly
+                            setEvents(createdEvents); // All created events
+                            setFilteredEvents(createdEvents); // Initially show all created events
+                        }
 
                         // filter registered events for students
                         if (docSnap.data().role.toLowerCase() === "student") {
@@ -88,6 +138,38 @@ const Dashboard = () => {
 
         return () => unsubscribe();
     }, []);
+
+    // Handles search (students)
+    const handleSearch = (search) => {
+
+        setSearchTerm(search);
+    };
+
+    const handleFilter = (category) => {
+
+        setSelectedCategory(category);
+    };
+
+    // search and filter logic
+    useEffect(() => {
+        let filtered = events;
+
+        //search filter
+        if (searchTerm){
+            filtered = filtered.filter((event) =>
+                event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                event.description.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+        }
+
+        // category filter
+        if (selectedCategory){
+            filtered = filtered.filter(event => event.category === selectedCategory);
+        }
+
+        //update filtered events
+        setFilteredEvents(filtered);
+    }, [events, searchTerm, selectedCategory]);
 
     // Create a new event (for organizers)
     const handleCreateEvent = async (eventData) => {
@@ -202,18 +284,6 @@ const Dashboard = () => {
         return <p>Loading...</p>; // Show a loading message while fetching the role
     }
 
- /*   const handleRegisterForEvent = async (eventId) => {
-        try {
-            const eventRef = doc(db, 'events', eventId);
-            await updateDoc(eventRef, {
-                registeredStudents: arrayUnion(auth.currentUser.uid), // Add student ID to the event
-            });
-            console.log('Registered for event:', eventId);
-        } catch (error) {
-            console.error('Error registering for event:', error);
-        }
-    };*/
-
     if (userRole.toLowerCase() === "student") {
         return (
             <div className="mx-2 sm:mx-4 md:mx-6 lg:mx-8">
@@ -221,11 +291,12 @@ const Dashboard = () => {
                     Hello <span className="font-bold">{userName}</span>! Welcome to your dashboard
                 </p>
                 <p className="text-xs sm:text-sm md:text-base lg:text-lg leading-tight sm:leading-snug md:leading-normal mt-8" > Start Exploring Opportunities </p>
+                <EventSearch onSearch={handleSearch} onFilter={handleFilter}/>
                 <div className="mt-6">
                     <div className="flex flex-col gap-8">
                         <div className="w-full">
                             <ErrorBoundary>
-                                <EventGridSwipe events={events} onRegister={handleRegisterForEvent}/>
+                                <EventGridSwipe events={filteredEvents} onRegister={handleRegisterForEvent}/>
                             </ErrorBoundary>
                         </div>
                         <div className="w-full">
@@ -257,14 +328,19 @@ const Dashboard = () => {
                 </div>
                 <div className="mt-8">
                     <h2 className="text-xl font-bold">Manage All Attendees</h2>
-                    {Object.entries(attendees).map(([eventId, attendeesList]) => (
-                        <ManageAttendeesList
-                            key={eventId}
-                            eventId={eventId}
-                            attendees={attendeesList}
-                            onRemoveAttendee={handleRemoveAttendee}
-                        />
-                    ))}
+                    {Object.entries(attendees).map(([eventId, attendeesList]) => {
+                        const event = events.find(event => event.id === eventId);
+                        const eventTitle = event ? event.title : "Event not found"; // This will show if the event isn't found
+                        return (
+                            <ManageAttendeesList
+                                key={eventId}
+                                eventId={eventId}
+                                attendees={attendeesList}
+                                eventTitle={eventTitle}
+                                onRemoveAttendee={handleRemoveAttendee}
+                            />
+                        );
+                    })}
                 </div>
 
             </div>

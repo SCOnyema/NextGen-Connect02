@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { updatePassword, reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth";
 import {db, auth } from "../firebaseConfig";
 
 
@@ -8,6 +9,17 @@ const UserProfile = () => {
     const [formData, setFormData] = useState({});
     const [isEditing, setIsEditing] = useState(false);
     const [loading, setLoading] = useState(true);
+
+    // for password change
+    const [passwordData, setPasswordData] = useState({
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+    });
+    // error message
+    const [passwordError, setPasswordError] = useState(null);
+    //success message
+    const [passwordSuccess, setPasswordSuccess] = useState(null);
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -47,11 +59,17 @@ const UserProfile = () => {
         setFormData({...formData, [e.target.name]: e.target.value});
     };
 
+    const handlePasswordChange = (e) => {
+        setPasswordData({ ...passwordData, [e.target.name]: e.target.value });
+    };
+
     const handleEdit = () => setIsEditing(true);
 
     const handleCancel = () => {
         setIsEditing(false);
         setFormData(user);
+        setPasswordError("");
+        setPasswordSuccess("");
     };
 
     const handleSubmit = async (e) => {
@@ -60,6 +78,47 @@ const UserProfile = () => {
         await updateDoc(userRef, formData);
         setUser(formData);
         setIsEditing(false);
+    };
+
+    const handlePasswordSubmit = async (e) => {
+        e.preventDefault();
+        setPasswordError("");
+        setPasswordSuccess("");
+
+        try {
+            const { currentPassword, newPassword, confirmNewPassword } = passwordData;
+
+            // Check if new passwords match
+            if (newPassword !== confirmNewPassword) {
+                return setPasswordError("New passwords do not match.");
+            }
+
+            // Re-authenticate user with current password
+            const credential = EmailAuthProvider.credential(auth.currentUser.email, currentPassword);
+            await reauthenticateWithCredential(auth.currentUser, credential);
+
+            // Update password
+            await updatePassword(auth.currentUser, newPassword);
+            setPasswordSuccess("Password updated successfully!");
+            setPasswordData({
+                currentPassword: "",
+                newPassword: "",
+                confirmNewPassword: "",
+            });
+        } catch (error) {
+            console.error(error);
+            switch (error.code) {
+                case "auth/wrong-password":
+                    setPasswordError("Current password is incorrect.");
+                    break;
+                case "auth/weak-password":
+                    setPasswordError("New password is too weak. Use a stronger password.");
+                    break;
+                default:
+                    setPasswordError("Failed to update password. Please try again.");
+            }
+        }
+
     };
 
     if (!user) return <div> Loading...</div>;
@@ -138,6 +197,47 @@ const UserProfile = () => {
                     </div>
                 </div>
             )}
+
+            {/* Change Password Section */}
+            <div className="bg-white shadow rounded-lg p-4 mt-8 mb-8">
+                <h2 className="text-xl font-bold">Change Password</h2>
+                <form onSubmit={handlePasswordSubmit} className="space-y-4 mt-6">
+                    <input
+                        type="password"
+                        name="currentPassword"
+                        placeholder="Current Password"
+                        value={passwordData.currentPassword}
+                        onChange={handlePasswordChange}
+                        className="block w-auto p-2 border border-gray-300 rounded"
+                        required
+                    />
+                    <input
+                        type="password"
+                        name="newPassword"
+                        placeholder="New Password"
+                        value={passwordData.newPassword}
+                        onChange={handlePasswordChange}
+                        className="block w-auto p-2 border border-gray-300 rounded"
+                        required
+                    />
+                    <input
+                        type="password"
+                        name="confirmNewPassword"
+                        placeholder="Confirm New Password"
+                        value={passwordData.confirmNewPassword}
+                        onChange={handlePasswordChange}
+                        className="block w-auto p-2 border border-gray-300 rounded"
+                        required
+                    />
+                    {passwordError && <p className="text-red-500">{passwordError}</p>}
+                    {passwordSuccess && <p className="text-green-500">{passwordSuccess}</p>}
+                    <button type="submit" className="bg-blue-600 text-white rounded-full px-4 py-2">
+                        Update Password
+                    </button>
+                </form>
+            </div>
+
+
         </div>
     );
 

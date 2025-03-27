@@ -1,5 +1,8 @@
 import React from 'react';
 
+// I use this component to catch errors for within components more like testing to getting actual error in browser console
+
+
 class ErrorBoundary extends React.Component {
     constructor(props) {
         super(props);

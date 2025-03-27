@@ -1,8 +1,21 @@
 import React from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css'; // Core Swiper
+import { useNavigate } from 'react-router-dom';
 
-const CardGrid = ({ items }) => {
+const CardGrid = ({ events }) => {
+
+    const navigate = useNavigate(); // Initialize navigate
+
+    const handleRedirect = () => {
+        navigate('/login', {
+            state: {
+                from: 'event-registration',
+                message: "Please login to register for events"
+            }
+        });
+    };
+
     return (
         <div className="pt-4 pb-8">
 
@@ -29,21 +42,20 @@ const CardGrid = ({ items }) => {
 
                 }}
             >
-                {items.map((item, index) => (
+                {events.map((event, index) => (
                     <SwiperSlide key={index} className="px-2">
                         <div className="p-4 shadow-lg rounded-lg bg-white h-full">
-                            <h3 className="text-xl font-bold">{item.title}</h3>
-                            <p>{item.description}</p>
+                            <h3 className="text-xl font-bold">{event.title}</h3>
+                            <p>{event.description}</p>
+                            <div className="mt-4 text-sm text-gray-500">{event.date}{/* • {event.location}*/}</div>
                             <div className="flex justify-between items-center mt-4">
-                                <div className="flex space-x-2">
-                                    {item.tags.map((tag, tagIndex) => (
-                                        <span key={tagIndex} className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full mr-2">
-                                        {tag}
-                                    </span>
-                                    ))}
-                                </div>
-                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                    {item.buttonText}
+                                <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full mr-2">
+                                        {event.location}
+                                </span>
+                                <button
+                                    onClick={handleRedirect}
+                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                    Register
                                 </button>
                             </div>
                         </div>

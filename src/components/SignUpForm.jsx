@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {createUserWithEmailAndPassword} from "firebase/auth";
+import {createUserWithEmailAndPassword, sendEmailVerification} from "firebase/auth";
 import {auth, db} from "../firebaseConfig";
 import { doc, setDoc} from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
@@ -12,13 +12,28 @@ function SignUpForm({ onSignUp }) {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
+    // Password validation function
+    const isPasswordStrong = (password) => {
+        const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
+        return strongPasswordRegex.test(password);
+    };
+
     const handleSignUp = async (event) => {
         event.preventDefault();
         setError('')
+
+        if (!isPasswordStrong(password)) {
+            setError("Password must be at least 8 characters long, include an uppercase letter, a number, and a symbol.");
+            return;
+        }
+
         try {
 
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
+
+            await sendEmailVerification(user);
+            console.log('Verification email sent.');
 
             // store additional user details in Firestore
             await setDoc(doc(db, "Users", user.uid), {

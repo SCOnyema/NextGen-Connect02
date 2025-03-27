@@ -9,7 +9,7 @@ import CompeteIcon from '../assets/icons/compete-icon.svg'
 
 function BottomNavbar() {
     return (
-        <div className="fixed bottom-0 w-full bg-white border-t shadow-md md:hidden">
+        <div className="fixed bottom-0 w-full z-30 bg-white border-t shadow-md md:hidden">
             <div className="flex justify-around py-2">
                 <Link to="/" className="flex flex-col items-center text-gray-600 hover:text-blue-600">
 

@@ -1,9 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect }from 'react';
 import logo from '../assets/logo.svg';
 import { useNavigate, Link } from 'react-router-dom';
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebaseConfig";
 
 function Navbar() {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        // Detect auth state changes
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setIsLoggedIn(true); // User is logged in
+            } else {
+                setIsLoggedIn(false); // User is logged out
+            }
+        });
+
+        // Cleanup the subscription when the component unmounts
+        return () => unsubscribe();
+    }, []);
 
     const handleNavigate = (path) => {
         navigate(path);
@@ -25,7 +42,19 @@ function Navbar() {
                     <button onClick={() => handleNavigate('/compete')} className="hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Compete</button>
                 </div>
 
-                <button onClick={() => handleNavigate('/login')} className="bg-white text-blue-900 px-4 py-2 rounded-full ml-4 hover:bg-blue-100 transition-colors">Login</button>
+                {/* Conditional rendering for Login/Dashboard */}
+                <div>
+                    {isLoggedIn ? (
+                        <button onClick={() => handleNavigate('/dashboard')} className="bg-white text-blue-900 px-4 py-2 rounded-full ml-4 hover:bg-blue-100 transition-colors">
+                            Dashboard
+                        </button>
+                    ) : (
+                        <button onClick={() => handleNavigate('/login')} className="bg-white text-blue-900 px-4 py-2 rounded-full ml-4 hover:bg-blue-100 transition-colors">
+                            Login
+                        </button>
+                    )}
+                </div>
+
             </div>
         </nav>
     );

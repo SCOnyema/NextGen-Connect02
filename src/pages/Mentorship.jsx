@@ -1,42 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from '../firebaseConfig';
 import HeroBanner from "../components/HeroBanner";
 import SearchBar from "../components/SearchBar";
 import CardGrid from "../components/CardGrid";
 import mentorshipImage from "../assets/mentorshipcomputing.webp";
 
+
 const Mentorship = () => {
+    const [events, setEvents] = useState([]);
     const [search, setSearch] = useState("");
+    const [error, setError] = useState(null);
 
-    const items = [
-        {
-            title: "Programming Mentorship",
-            description: "Refine your programming skills through personalized sessions with a tech expert.",
-            tags: ["Virtual", "Free"],
-            buttonText: "Apply Now"
-        },
-        {
-            title: "Career Development in Tech",
-            description: "Guidance on career paths in technology, resume building, and interview preparation.",
-            tags: ["In-Person", "Paid"],
-            buttonText: "View Details"
-        },
-        {
-            title: "Web Development Mentorship",
-            description: "Hands-on web development sessions covering front-end frameworks and backend logic.",
-            tags: ["Virtual", "Paid"],
-            buttonText: "Sign Up"
-        },
-        {
-            title: "Machine Learning Techniques",
-            description: "Master machine learning concepts and real-world application under the guidance of a data scientist.",
-            tags: ["In-Person", "Free"],
-            buttonText: "Join Now"
-        }
-    ];
+    useEffect(() => {
+        const fetchEvents = async () => {
+            try {
+                const q = query(collection(db, "events"), where("category", "==", "Mentorship"));
+                const querySnapshot = await getDocs(q);
+                const eventsData = querySnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+                setEvents(eventsData);
+            } catch (err) {
+                setError(err.message);
+                console.error("Error fetching events:", err);
+            }
+        };
 
-    const filteredItems = items.filter(item =>
-        item.title.toLowerCase().includes(search.toLowerCase())
-    );
+        fetchEvents();
+    }, []);
+
+    const filteredEvents = events.filter(event =>
+        event.title.toLowerCase().includes(search.toLowerCase()));
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
 
     return (
         <>
@@ -49,11 +49,13 @@ const Mentorship = () => {
                 placeholder="Search for Mentorship..."
                 onSearch={setSearch}
             />
-            <div className="flex p-4">
+            <>
+            <div className="flex p-4 mt-4 mb-10 sm:mb-4">
                 <div className="w-full md:w-4/4">
-                    <CardGrid items={filteredItems} />
+                    <CardGrid events={filteredEvents} />
                 </div>
             </div>
+            </>
         </>
     );
 };

@@ -26,7 +26,7 @@ code {
 }
 
 .copyright-section {
-    padding-top: 45px; /* Adds space above the copyright text */
+    padding-top: 45px;
 
 }
 .sticky-footer{
@@ -44,16 +44,47 @@ code {
 }
 
 .calendar-container {
-    padding: 0px;
-    height: 80vh;
-    width: 100%;
+    overflow-x: auto; /* Enable side-to-side scrolling on mobile */
+    overflow-y: hidden; /* Prevent unnecessary vertical scrolling */
+    width: 100%; /* Take full width of the parent */
+    height: 80vh; /* Maintain the calendar's height */
 }
 
 .react-big-calendar{
-    min-height: 500px;
+    min-height: 600px;
     height: 100%;
 }
 
 .swiper-slide {
-    width: 300px; /* Adjust as needed */
+    width: 300px;
+}
+
+.swiper-wrapper {
+    display: flex !important;
+    transition-timing-function: linear !important;
+}
+
+.swiper-slide {
+    height: auto !important;
+}
+
+.calendar-page-container {
+    overflow-x: auto; /* or 'visible' depending on your needs */
+}
+
+
+.rbc-event {
+    white-space: nowrap; /* Prevent wrapping of event title */
+    overflow: hidden; /* Hide overflowing text in the event */
+    text-overflow: ellipsis; /* Show "..." for truncated text */
+}
+
+@media (max-width: 768px) {
+    .rbc-event {
+        font-size: 10px; /* Reduce font size for mobile */
+    }
+
+    .react-big-calendar {
+        ,: 12px; /* Slightly smaller calendar font for mobile */
+    }
 }
