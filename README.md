@@ -122,11 +122,13 @@ Manage attendee list
 
 Student Dashboard 
 
-![alt text](image.png)
+![Screenshot 2025-03-27 234319](https://github.com/user-attachments/assets/2398b38d-4fed-4d69-8601-54722d03debb)
+
 
 Organizer Dashboard 
 
-![alt text](image-1.png)
+![image](https://github.com/user-attachments/assets/f954bb68-e88d-41a7-b27c-cadcaf8c4fd1)
+
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
