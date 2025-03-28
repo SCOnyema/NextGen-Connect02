@@ -130,7 +130,7 @@ Organizer Dashboard
 
 ![image](https://github.com/user-attachments/assets/f954bb68-e88d-41a7-b27c-cadcaf8c4fd1)
 
-Project Link : [nextgenconnect-five.vercel.app ](https://nextgenconnect-five.vercel.app/)
+Project Link : [nextgen-connect.vercel.app ](https://nextgen-connect.vercel.app/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
