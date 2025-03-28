@@ -140,7 +140,7 @@ Project Link : [nextgen-connect.vercel.app ](https://nextgen-connect.vercel.app/
 
 Samuel Chiemerie - sconyema@uclan.ac.uk - [GitHub Account](https://github.com/SCOnyema)
 
-Project Link: [https://github.com/SCOnyema/NextGen-Connect02](https://github.com/SCOnyema/NextGen-Connect02)
+Project Link: [https://nextgen-connect.vercel.app/](https://nextgen-connect.vercel.app/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
