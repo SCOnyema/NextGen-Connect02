@@ -69,7 +69,7 @@ code {
 }
 
 .calendar-page-container {
-    overflow-x: auto; /* or 'visible' depending on your needs */
+    overflow-x: auto;
 }
 
 
@@ -81,11 +81,11 @@ code {
 
 @media (max-width: 768px) {
     .rbc-event {
-        font-size: 10px; /* Reduce font size for mobile */
+        font-size: 10px; /* reduce font size for mobile */
     }
 
     .react-big-calendar {
-        font-size: 12px; /* Slightly smaller calendar font for mobile */
+        font-size: 12px; /* smaller calendar font for mobile */
     }
 }
 
@@ -99,12 +99,13 @@ code {
 @media (max-width: 639px) {
     .swiper-slide {
         width: 100% !important;
-        box-sizing: border-box;
+        flex-shrink: 0 !important;
     }
 }
 
 .swiper-slide {
     height: auto !important;
+    display: flex;
 }
 
 

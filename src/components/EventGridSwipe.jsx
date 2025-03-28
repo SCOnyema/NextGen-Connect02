@@ -29,6 +29,7 @@ const EventGridSwipe = ({ events, onRegister }) => {
             >
                 {events.map((event) => (
                     <SwiperSlide key={event.id} className="!h-auto">
+
                         <EventCard event={event} onRegister={onRegister} />
                     </SwiperSlide>
                 ))}

@@ -30,7 +30,7 @@ const EventCard = ({ event, onRegister }) => {
     }
 
     return (
-        <div className="bg-gray-100 rounded-lg shadow-md p-4 w-full h-full">
+        <div className="bg-gray-100 rounded-lg shadow-md p-4 w-72 sm:w-72 md:w-80 lg:w-96 max-w-full relative">
             <div className="p-4">
                 <h2 className="text-xl font-bold">{event.title || "Untitled Event"}</h2>
                 <p className="text-gray-600 mt-2 ">
