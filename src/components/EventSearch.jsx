@@ -15,15 +15,15 @@ const EventSearch = ({ onSearch, onFilter }) => {
     };
 
     return (
-        <div className="flex flex-col sm:flex-row gap-4 p-4">
+        <div className="flex flex-col w-72 sm:flex-row gap-4 p-4">
             <input
             type="text"
             placeholder="Search Events"
-            className="px-4 py-2 border rounded"
+            className="px-4 py-2 border w-72  rounded"
             value={search}
             onChange={handleSearchChange}
             />
-            <select className="px-4 py-2 border rounded"
+            <select className="px-4 py-2 border rounded w-72"
             value={category}
             onChange={handleCategoryChange}
             >

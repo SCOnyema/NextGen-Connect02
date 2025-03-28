@@ -12,8 +12,8 @@ const RegisteredEventsList = ({ events, onUnregister }) => {
     const handleCancel = () => setSelectedEventId(null);
 
     return (
-        <div className="p-4">
-            <h2 className="text-xl font-bold mb-4">Registered Events</h2>
+        <div className="p-4 shadow-md">
+            <h2 className="text-xl font-bold  mb-4">Registered Events</h2>
 
             <div className="space-y-4">
                 {events.length === 0 ? (
@@ -22,7 +22,7 @@ const RegisteredEventsList = ({ events, onUnregister }) => {
                     </p>
                 ) : (
                     events.map((event) => (
-                        <div key={event.id} className="bg-white rounded-lg shadow-md p-4">
+                        <div key={event.id} className="bg-white rounded-lg w-72 p-4">
                             {/* Title */}
                             <h3 className="text-sm sm:text-base md:text-lg font-bold leading-tight sm:leading-snug">{event.title}</h3>
                             {/* Event Details */}
