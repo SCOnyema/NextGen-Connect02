@@ -88,7 +88,7 @@ _Below is an example of how you can instruct your audience on installing and set
    ```
 3. API in `firebaseConfig.jsx`
    ```js
-   FireBaseConfig.jsx, containing my AP, is available in the .env file;
+   FireBaseConfig.jsx, which contains my API;
    ```
 4. Git url 
    ```sh
@@ -111,7 +111,7 @@ Once the app is running locally, users (students, organizers) can sign up and lo
 
 Students can:
 Browse through events on the front pages and the dashboard
-On dashboard, students can filter events by categories 
+On the dashboard, students can filter events by categories 
 Register and manage events 
 
 Organizers can:
