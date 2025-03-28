@@ -149,7 +149,7 @@ Project Link: [https://github.com/SCOnyema/NextGen-Connect02](https://github.com
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-I would like to express my gratitude to my project supervisor for his consistent feedback, gudiance, and support through out the development phase of this project. His insights played a key role in helping me refine my approach and ideas.
+I would like to express my gratitude to my project supervisor for his consistent feedback, guidance, and support throughout the development phase of this project. His insights played a key role in helping me refine my approach and ideas.
 
 Additional thanks to:
 
