@@ -32,11 +32,11 @@ Samuel Chiemerie Onyema
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This project is a web applicaion solely developed and designed to support computing students in engaging and discovery employability events oppoturnities such as internships,mentorships , workshops and competition programs. The aim is to provide a centralized platform where students personalized events that help support thier academic journey and career path ways.
+This project is a web application solely developed and designed to support computing students in engaging and discovery employability events opportunities such as internships, mentorships, workshops, and competition programs. The aim is to provide a centralized platform where students can access personalized events that help support their academic journey and career pathways.
 
-This platform allows users (students, organizers) to register and host events, Both students and organizer van sign up for an account on specific user role based. Students can browse through events and also filter events by category, register for events and manage registered events, while Organizers can create events by submitting neccessary information and also manage thier events and registered attendees.
+This platform allows users (students, organizers) to register and host events. Both students and organizers can sign up for an account with a specific user base. Students can browse through events and also filter events by category, register for events and manage registered events, while Organizers can create events by submitting neccessary information and also manage thier events and registered attendees.
 
-The project is built using React and TailwindCSS for a responsive and user-friendly frontend. On the backend, it uses Firebase for authentication, user role management, and real time storage. The application comes with different features like event search filters by categories, reponsive calendar page that shows students all availble events and shows organizers their own created events. Users can change their passwords on login in and the sign up system has a email autheticator system.
+The project is built using React and TailwindCSS for a responsive and user-friendly frontend. On the backend, it uses Firebase for authentication, user role management, and real-time storage. The application comes with different features like event search filters by categories, a responsive calendar page that shows students all available events, and shows organizers their own created events. Users can change their passwords while logged in, and the sign-up system has an email authenticator system that verifies all registered email addresses.
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -47,7 +47,7 @@ The project is built using React and TailwindCSS for a responsive and user-frien
 * TailwindCSS
 * Vite Bundle
 * Swiper.js
-* React Big Calendar (momemt)
+* React Big Calendar (moment)
 * React Icons
 * Firebase (Firestore)
 
@@ -57,7 +57,7 @@ The project is built using React and TailwindCSS for a responsive and user-frien
 <!-- GETTING STARTED -->
 ## Getting Started
 
-To get the project running, you must have the latest Node.js and npm installed in your computer and follow this simple steps 
+To get the project running, you must have the latest Node.js and npm installed on your computer and follow these simple steps 
 
 
 ### Prerequisites
@@ -70,7 +70,8 @@ This is an example of how to list things you need to use the software and how to
   npm install npm@latest -g
   ```
 * IDE like Webstorm or VS Code 
-* npm install (this installs all the packages and dependecies in the project)
+* npm install (this installs all the packages and dependencies in the project)
+* and a stable internet connection to connect with Firebase
 
 ### Installation
 
@@ -85,16 +86,16 @@ _Below is an example of how you can instruct your audience on installing and set
    ```sh
    npm install
    ```
-3. Enter your API in `firebaseConfig.jsx`
+3. API in `firebaseConfig.jsx`
    ```js
-   const API_KEY = 'ENTER YOUR API';
+   FireBaseConfig.jsx, containing my AP, is available in the .env file;
    ```
-4. Change git remote url to avoid accidental pushes to base project
+4. Git url 
    ```sh
    git remote set-url origin github.com/SCOnyema/NextGen-Connect02
    git remote -v # confirm the changes
    ```
-5. Run the developement sever
+5. Run the development server
    ```sh
    npm run dev
    ```
@@ -106,18 +107,18 @@ _Below is an example of how you can instruct your audience on installing and set
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Once the app is running locally, users (student, organizer) can sign up and login
+Once the app is running locally, users (students, organizers) can sign up and log in
 
 Students can:
-Broswer through events on the front pages and dashboard
-In dashboard student can filter events by categories 
+Browse through events on the front pages and the dashboard
+On dashboard, students can filter events by categories 
 Register and manage events 
 
 Organizers can:
-Login to thier account 
+Log in to their account 
 Create and host events
 Manage events
-Manage attendee list
+Manage the attendee list
 
 
 Student Dashboard 
@@ -129,7 +130,7 @@ Organizer Dashboard
 
 ![image](https://github.com/user-attachments/assets/f954bb68-e88d-41a7-b27c-cadcaf8c4fd1)
 
-
+Project Link : [nextgenconnect-five.vercel.app ](https://nextgenconnect-five.vercel.app/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
