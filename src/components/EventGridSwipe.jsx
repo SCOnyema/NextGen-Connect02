@@ -9,6 +9,7 @@ import EventCard from './EventCard';
 const EventGridSwipe = ({ events, onRegister }) => {
     return (
         <div className="w-full max-w-7xl mx-auto px-4 ">
+            <div className="swiper-container">
             <Swiper
                 spaceBetween={16}
                 slidesPerView={1}
@@ -34,6 +35,7 @@ const EventGridSwipe = ({ events, onRegister }) => {
                     </SwiperSlide>
                 ))}
             </Swiper>
+        </div>
         </div>
     );
 };
